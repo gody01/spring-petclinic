@@ -15,19 +15,19 @@ components:
         port: 8080
     memoryLimit: 768Mi
     env:
-      - value: '-XX:MaxRAMPercentage=50.0 -XX:+UseParallelGC -XX:MinHeapFreeRatio=10 -XX:MaxHeapFreeRatio=20 -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xms20m -Djava.security.egd=file:/dev/./urandom -Duser.home=/home/jboss'
-        name: JAVA_OPTS
-      - value: $(JAVA_OPTS)
-        name: MAVEN_OPTS
-      - value: 'mysql'
-        name: SPRING_PROFILES_ACTIVE
-      - value: 'jdbc:mysql://mysql-workspace:3306/petclinic'
-        name: MYSQL_URL
-      mountSources: true
-      volumes:
-        - name: m2
-          containerPath: /home/jboss/.m2
-      alias: maven
+      - name: JAVA_OPTS
+        value: '-XX:MaxRAMPercentage=50.0 -XX:+UseParallelGC -XX:MinHeapFreeRatio=10 -XX:MaxHeapFreeRatio=20 -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xms20m -Djava.security.egd=file:/dev/./urandom -Duser.home=/home/jboss'
+      - name: MAVEN_OPTS
+        value: $(JAVA_OPTS)
+      - name: SPRING_PROFILES_ACTIVE
+        value: 'mysql'
+      - name: MYSQL_URL
+        value: 'jdbc:mysql://mysql-workspace:3306/petclinic'
+    mountSources: true
+    volumes:
+      - name: m2
+        containerPath: /home/jboss/.m2
+    alias: maven
 - name: database
   container:
     alias: mysql
