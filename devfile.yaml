@@ -58,8 +58,7 @@ commands:
   - id: devbuild
     exec:
       component: runtime
-      command: 'MAVEN_OPTS="-Xmx200m" && mvn -Duser.home=${HOME} -DskipTests clean install'
-      component: maven
+      commandLine: 'mvn MAVEN_OPTS="-Xmx200m" && mvn -Duser.home=${HOME} -DskipTests clean install'
       workingDir: ${PROJECTS_ROOT}
       group:
        kind: build
@@ -67,16 +66,14 @@ commands:
   - id: build
     exec:
       component: runtime
-      command: 'MAVEN_OPTS="-Xmx200m" && mvn -Duser.home=${HOME} -DskipTests clean install'
-      component: maven
+      commandLine: 'mvn MAVEN_OPTS="-Xmx200m" && mvn -Duser.home=${HOME} -DskipTests clean install'
       workingDir: ${PROJECTS_ROOT}
       group:
        kind: build
   - id: devrun
     exec:
       component: runtime
-      command: 'MAVEN_OPTS="-Xmx200m" && mvn -Duser.home=${HOME} spring-boot:run'
-      component: maven
+      commandLine: 'mvn MAVEN_OPTS="-Xmx200m" && mvn -Duser.home=${HOME} spring-boot:run'
       workingDir: ${PROJECTS_ROOT}
       group:
         kind: run
@@ -84,8 +81,7 @@ commands:
   - id: run
     exec:
       component: runtime
-      command: 'MAVEN_OPTS="-Xmx200m" && mvn -Duser.home=${HOME} spring-boot:run'
-      component: maven
+      commandLine: 'mvn MAVEN_OPTS="-Xmx200m" && mvn -Duser.home=${HOME} spring-boot:run'
       workingDir: ${PROJECTS_ROOT}
       group:
         kind: run
