@@ -6,8 +6,8 @@ metadata:
 starterProjects:
   - name: spring-petclinic
       git:
-      source: 'https://github.com/redhat-developer-demos/spring-petclinic.git'
-      branch: main
+        remotes:
+          origin: 'https://github.com/redhat-developer-demos/spring-petclinic.git'
 components:
   - id: redhat/java11/latest
     type: chePlugin
