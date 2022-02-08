@@ -1,8 +1,0 @@
-schemaVersion: 2.0.0
-metadata:
-  name: spring-petclinic
-starterProjects:
-- name: spring-petclinic
-  git:
-    remotes:
-      origin: 'https://github.com/redhat-developer-demos/spring-petclinic.git'
