@@ -11,7 +11,7 @@ components:
   container:
     image: 'registry.redhat.io/codeready-workspaces/plugin-java11-rhel8@sha256:641e223f5efbc32bab3461aa000e3a50a5dcca063331322158d1c959129ffd99'
     endpoints:
-      - name: "8080 - tcp"
+      - name: "8080-tcp"
         targetPort: 8080
     memoryLimit: 768Mi
     env:
