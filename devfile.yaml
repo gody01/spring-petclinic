@@ -40,9 +40,6 @@ components:
         value: petclinic
       - name: MYSQL_DATABASE
         value: petclinic
-    volumes:
-      - name: mysql-storage
-        containerPath: /var/lib/mysql
     endpoints:
       - name: mysql-workspace
         port: 3306
