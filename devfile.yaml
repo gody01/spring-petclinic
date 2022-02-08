@@ -41,8 +41,8 @@ components:
       - name: MYSQL_DATABASE
         value: petclinic
     endpoints:
-      - name: mysql-workspace
-        port: 3306
+      - name: "mysql-workspace"
+        targetPort: 3306
         attributes:
           discoverable: 'true'
           public: 'false'
