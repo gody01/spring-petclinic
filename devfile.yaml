@@ -1,13 +1,11 @@
 schemaVersion: 2.0.0
 metadata:
-  name: spring-petclinic-
-  version: 1.1.0
-  language: "java"
+name: spring-petclinic
 starterProjects:
-  - name: spring-petclinic
-      git:
-        remotes:
-          origin: 'https://github.com/redhat-developer-demos/spring-petclinic.git'
+- name: spring-petclinic
+  git:
+    remotes:
+      origin: 'https://github.com/redhat-developer-demos/spring-petclinic.git'
 components:
 - name: runtime
   container:
@@ -57,60 +55,37 @@ components:
           discoverable: 'true'
           public: 'false'
 commands:
-  - name: 1. Build
-    actions:
-      - workdir: '${CHE_PROJECTS_ROOT}/spring-petclinic'
-        type: exec
-        command: 'MAVEN_OPTS="-Xmx200m" && mvn -Duser.home=${HOME} -DskipTests clean install'
-        component: maven
-  - name: 2. Run
-    actions:
-      - workdir: '${CHE_PROJECTS_ROOT}/spring-petclinic'
-        type: exec
-        command: 'MAVEN_OPTS="-Xmx200m" && mvn -Duser.home=${HOME} spring-boot:run'
-        component: maven
-  - name: 3. Run in debug mode
-    actions:
-      - workdir: '${CHE_PROJECTS_ROOT}/spring-petclinic'
-        type: exec
-        command: |-
-          mvn  -Duser.home=${HOME} spring-boot:run -Dspring-boot.run.jvmArguments="-Xdebug
-           -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005"
-        component: maven
-  - name: 4. Run tests
-    actions:
-      - workdir: '${CHE_PROJECTS_ROOT}/spring-petclinic'
-        type: exec
-        command: 'MAVEN_OPTS="-Xmx200m" && mvn -Duser.home=${HOME} verify'
-        component: maven
-  - name: 5. Log into deployment cluster
-    actions:
-      - workdir: '${CHE_PROJECTS_ROOT}/spring-petclinic'
-        type: exec
-        command: |
-          echo
-          echo "Before you can deploy this application to an openshift cluster,"
-          echo "you must run 'oc login ...' in the maven terminal."
-          echo
-        component: maven
-  - name: 6. Deploy to OpenShift
-    actions:
-      - workdir: '${CHE_PROJECTS_ROOT}/spring-petclinic'
-        type: exec
-        command: 'mvn fabric8:deploy -Popenshift -DskipTests'
-        component: maven
-  - name: Debug remote java application
-    actions:
-      - referenceContent: |
-          {
-           "version": "0.2.0",
-           "configurations": [
-             {
-               "type": "java",
-               "name": "Debug (Attach) - Remote",
-               "request": "attach",
-               "hostName": "localhost",
-               "port": 5005
-             }]
-           }
-        type: vscode-launch
+  - id: devbuild
+    exec:
+      component: runtime
+      command: 'MAVEN_OPTS="-Xmx200m" && mvn -Duser.home=${HOME} -DskipTests clean install'
+      component: maven
+      workingDir: ${PROJECTS_ROOT}
+      group:
+       kind: build
+       isDefault: true
+  - id: build
+    exec:
+      component: runtime
+      command: 'MAVEN_OPTS="-Xmx200m" && mvn -Duser.home=${HOME} -DskipTests clean install'
+      component: maven
+      workingDir: ${PROJECTS_ROOT}
+      group:
+       kind: build
+  - id: devrun
+    exec:
+      component: runtime
+      command: 'MAVEN_OPTS="-Xmx200m" && mvn -Duser.home=${HOME} spring-boot:run'
+      component: maven
+      workingDir: ${PROJECTS_ROOT}
+      group:
+        kind: run
+        isDefault: true
+  - id: run
+    exec:
+      component: runtime
+      command: 'MAVEN_OPTS="-Xmx200m" && mvn -Duser.home=${HOME} spring-boot:run'
+      component: maven
+      workingDir: ${PROJECTS_ROOT}
+      group:
+        kind: run
